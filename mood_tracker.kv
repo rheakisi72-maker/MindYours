@@ -1,0 +1,218 @@
+# --- WIDGET KECIL ---
+<CalendarDay>:
+    background_normal: ''
+    background_color: 0,0,0,0
+    color: (0,0,0,1) if self.bg_color[3] < 0.5 else (0,0,0,0.8)
+    bold: True
+    canvas.before:
+        Color:
+            rgba: root.bg_color
+        Ellipse:
+            pos: self.center_x - dp(16), self.center_y - dp(16)
+            size: dp(32), dp(32)
+
+<LegendItem>:
+    size_hint_y: None
+    height: dp(30)
+    spacing: dp(10)
+    
+    # Titik Warna
+    Widget:
+        size_hint_x: None
+        width: dp(15)
+        size_hint_y: None
+        height: dp(15)
+        pos_hint: {'center_y': 0.5}
+        canvas:
+            Color:
+                rgba: root.dot_color
+            Ellipse:
+                pos: self.pos
+                size: self.size
+
+    # Nama Mood
+    Label:
+        text: root.mood_name
+        color: 0,0,0,0.8
+        bold: True
+        halign: 'left'
+        text_size: self.size
+        valign: 'middle'
+        size_hint_x: 0.5
+
+    # Jumlah Hari
+    Label:
+        text: root.count_text
+        color: 0,0,0,0.5
+        halign: 'right'
+        text_size: self.size
+        valign: 'middle'
+        size_hint_x: 0.3
+
+# --- SCREEN 1: KALENDER ---
+<MoodTrackerScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png'
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 1, 1, 1, 0.3
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+
+        # Header
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: '<'
+                font_size: sp(30)
+                bold: True
+                size_hint_x: None
+                width: dp(40)
+                background_normal: ''
+                background_color: 0,0,0,0
+                color: 0,0,0,1
+                on_release: root.go_back()
+            Label:
+                text: 'Mood Tracker'
+                font_size: sp(22)
+                bold: True
+                color: 0,0,0,1
+
+            Widget:
+                size_hint_x: None
+                width: dp(40)
+
+        # Navigasi Bulan
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: '<'
+                color: 0,0,0,0.5
+                background_normal: ''
+                background_color: 0,0,0,0
+                on_release: root.prev_month()
+            Label:
+                id: month_label
+                text: '...'
+                font_size: sp(20)
+                bold: True
+                color: 0.2, 0.2, 0.2, 1
+            Button:
+                text: '>'
+                color: 0,0,0,0.5
+                background_normal: ''
+                background_color: 0,0,0,0
+                on_release: root.next_month()
+
+        # Grid Kalender
+        GridLayout:
+            id: calendar_grid
+            cols: 7
+            spacing: dp(10)
+            size_hint_y: 0.6
+
+        # Info & Tombol Chart
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.2
+            spacing: dp(5)
+            padding: [0, dp(10), 0, 0]
+
+            Label:
+                text: root.dominant_mood_text
+                color: 0,0,0,0.8
+                font_size: sp(16)
+                bold: True
+            
+            Button:
+                text: 'Lihat Grafik Statistik >>'
+                size_hint_y: None
+                height: dp(40)
+                background_normal: ''
+                background_color: 1, 1, 1, 0.5
+                color: 0,0,0,1
+                bold: True
+                on_release: root.go_to_stats()
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.5
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(10),]
+
+# --- SCREEN 2: STATISTIK CHART ---
+<MoodStatScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png' 
+            size: self.size
+            pos: self.pos
+       
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+
+        # Header
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: '<'
+                font_size: sp(30)
+                bold: True
+                size_hint_x: None
+                width: dp(40)
+                background_normal: ''
+                background_color: 0,0,0,0
+                color: 0,0,0,1
+                on_release: root.go_back()
+            Label:
+                id: title_lbl
+                text: 'Statistik Mood'
+                font_size: sp(20)
+                bold: True
+                color: 0,0,0,1
+
+            Widget:
+                size_hint_x: None
+                width: dp(40)
+
+        # AREA CHART (Tengah - Besar)
+        BoxLayout:
+            id: chart_area
+            size_hint_y: 0.5
+            padding: dp(20)
+
+        # LABEL "Summary"
+        Label:
+            text: 'Detail:'
+            size_hint_y: None
+            height: dp(30)
+            halign: 'left'
+            text_size: self.size
+            color: 0,0,0,0.6
+            bold: True
+            padding_x: dp(10)
+
+        # AREA LEGEND (Bawah - List)
+        ScrollView:
+            size_hint_y: 0.4
+            BoxLayout:
+                id: legend_container
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(10)
+                spacing: dp(5)

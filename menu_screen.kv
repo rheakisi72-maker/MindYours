@@ -1,0 +1,109 @@
+<MenuScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png'  # Background asli kamu
+            size: self.size
+            pos: self.pos
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+        
+        # --- Greeting text di atas ---
+        Label:
+            id: greeting_label
+            text: 'Loading...' 
+            font_size: sp(22)
+            color: 0.5, 0.1, 0.5, 1
+            bold: True
+            size_hint_y: 0.2
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+        
+        # --- AREA GRID UTAMA (2 Kolom x 2 Baris) ---
+        GridLayout:
+            cols: 2                 # Ini kuncinya: membagi jadi 2 kolom
+            spacing: dp(20)         # Jarak antar tombol
+            size_hint_y: 0.8
+            # Padding dikurangi dikit kiri-kanan biar tombolnya ga kekecilan
+            padding: [dp(10), dp(10), dp(10), dp(40)] 
+            
+            # --- 1. Tombol Today Feeling ---
+            Button:
+                text: 'Today\nFeeling'
+                font_size: sp(20)
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                color: 0.5, 0.1, 0.5, 1
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_today_feeling()
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.95
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(20)]
+            
+            # --- 2. Tombol Motivation ---
+            Button:
+                text: 'Motivation\nBox'
+                font_size: sp(20)
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                color: 0.5, 0.1, 0.5, 1
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_motivation()
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.95
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(20)]
+            
+            # --- 3. Tombol Mood Tracker ---
+            Button:
+                text: 'Mood\nTracker'
+                font_size: sp(20)
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                color: 0.5, 0.1, 0.5, 1
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_mood_tracker()
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.95
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(20)]
+
+            # --- 4. Tombol MINI GAME (Baru!) ---
+            Button:
+                text: 'Mini Game\n(Bubble)'
+                font_size: sp(20)
+                bold: True
+                halign: 'center'
+                valign: 'middle'
+                # Warna teks Putih biar kontras sama background biru
+                color: 0.5, 0.1, 0.5, 1   
+                background_normal: ''
+                background_color: 1, 1, 1, 0
+                on_press: root.go_to_mini_game()
+                canvas.before:
+                    Color:
+                        # Warna Biru Pastel (Joy/Sadness Vibe)
+                        rgba: 1, 1, 1, 0.95 
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(20)]

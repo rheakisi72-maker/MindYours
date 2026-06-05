@@ -1,0 +1,140 @@
+<HistoryScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png'
+            size: self.size
+            pos: self.pos
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(15)
+        
+        # --- HEADER ---
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.1
+            spacing: dp(10)
+            
+            Button:
+                text: '<'
+                font_size: sp(32)
+                bold: True
+                color: 0.4, 0.2, 0.5, 1
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                size_hint_x: 0.15
+                on_press: root.go_back()
+            
+            Label:
+                text: 'My Journal'
+                font_size: sp(24)
+                bold: True
+                color: 0.4, 0.2, 0.5, 1
+                size_hint_x: 0.85
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+        
+        # --- SUBTITLE ---
+        Label:
+            text: 'Semua catatan curhatmu ada di sini'
+            font_size: sp(14)
+            color: 0, 0, 0, 1
+            size_hint_y: 0.05
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+        
+        # --- SCROLLVIEW UTAMA ---
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            scroll_type: ['bars', 'content']
+            bar_width: dp(10)
+            effect_cls: 'ScrollEffect'
+            smooth_scroll_end: 10
+            size_hint_y: 0.85
+            
+            # Container ini sudah benar, dia akan memanjang ke bawah
+            BoxLayout:
+                id: history_container
+                orientation: 'vertical'
+                size_hint_y: None 
+                height: self.minimum_height # Ini membiarkan container tumbuh
+                spacing: dp(15)
+                padding: [dp(5), dp(10), dp(5), dp(10)]
+
+# ====================================================================
+# TAMBAHKAN KODE DI BAWAH INI UNTUK MEMPERBAIKI MASALAH TEKS TUMPAH
+# Gunakan template ini untuk widget item yang Anda add di Python
+# ====================================================================
+
+<JournalItem@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    # KUNCI 1: Tinggi kartu dipaksa mengikuti isi konten (minimum_height)
+    height: content_wrapper.minimum_height 
+    padding: dp(10)
+    spacing: dp(10)
+
+    # Background Warna-warni
+    canvas.before:
+        Color:
+            rgba: root.bg_color if hasattr(root, 'bg_color') else (0.9, 0.9, 0.9, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(15),]
+
+    # Gambar Emosi (Kiri)
+    Image:
+        source: root.img_source if hasattr(root, 'img_source') else ''
+        size_hint: None, None
+        size: dp(60), dp(60)
+        pos_hint: {'top': 1} # Tempel di atas agar rapi
+
+    # Wrapper Teks (Tengah)
+    BoxLayout:
+        id: content_wrapper
+        orientation: 'vertical'
+        size_hint_y: None
+        # KUNCI 2: Wrapper teks juga harus tumbuh
+        height: self.minimum_height 
+        spacing: dp(5)
+
+        # Tanggal
+        Label:
+            text: root.date_text if hasattr(root, 'date_text') else ''
+            font_size: sp(10)
+            color: 0,0,0,0.6
+            size_hint_y: None
+            height: self.texture_size[1] # Sesuaikan tinggi font
+
+        # Judul Emosi
+        Label:
+            text: root.title_text if hasattr(root, 'title_text') else ''
+            bold: True
+            font_size: sp(16)
+            color: 0,0,0,1
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        # Isi Curhat (INI SOLUSI MASALAH ANDA)
+        Label:
+            text: root.content_text if hasattr(root, 'content_text') else ''
+            color: 0,0,0,1
+            font_size: sp(14)
+            
+            # --- 3 BARIS AJAIB FIX OVERFLOW ---
+            text_size: self.width, None   # Paksa teks turun baris (wrap)
+            size_hint_y: None             # Matikan tinggi otomatis
+            height: self.texture_size[1]  # Tinggi Label = Tinggi Teks
+            # ----------------------------------
+
+    # Tombol Aksi (Kanan) - Opsional
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_x: None
+        width: dp(30)
+        # (Tambahkan tombol delete/edit disini jika perlu)

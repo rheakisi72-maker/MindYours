@@ -1,0 +1,101 @@
+#:kivy 2.0.0
+
+<FallingBubble>:
+    size_hint: None, None
+    size: dp(60), dp(60)
+    source: root.image_source 
+    allow_stretch: True
+    keep_ratio: True
+    pos_hint: {}
+
+<BubbleGameScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png' 
+            pos: self.pos
+            size: self.size
+        # Layer Merah
+        Color:
+            rgba: (0.5, 0, 0, 0.3) if root.is_game_over else (0, 0, 0, 0)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # --- CONTAINER UTAMA ---
+    FloatLayout:
+        
+        # 1. AREA BUBBLE (LAYER PALING BELAKANG)
+        # Kita pisahkan ini biar dia selalu di belakang tombol & skor
+        FloatLayout:
+            id: game_area
+            # Tidak perlu size hint/pos hint, dia memenuhi layar
+        
+        # 2. SCORE BOARD (LAYER DEPAN - ATAS)
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 0.15
+            pos_hint: {'top': 1}
+            padding: dp(10)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 0.7
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [0, 0, 20, 20]
+            
+            Label:
+                text: "High Score: " + str(root.high_score)
+                font_size: '14sp'
+                color: 0.3, 0.3, 0.3, 1
+                bold: True
+            
+            Label:
+                text: str(root.current_score)
+                font_size: '36sp'
+                bold: True
+                color: 0.4, 0.1, 0.5, 1
+
+        # 3. TOMBOL START / BACK (LAYER DEPAN - BAWAH)
+        BoxLayout:
+            size_hint: 1, 0.12
+            pos_hint: {'bottom': 1}
+            padding: dp(20)
+            spacing: dp(20)
+            
+            # Tombol Menu
+            Button:
+                text: "Menu"
+                bold: True
+                font_size: '18sp'
+                color: 0.5, 0.1, 0.5, 1
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                disabled: root.is_playing 
+                opacity: 0 if root.is_playing else 1
+                on_release: root.manager.current = 'menu'
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20,]
+
+            # Tombol Start
+            Button:
+                text: "STOP" if root.is_playing else ("GAME OVER!\n(Tap to Restart)" if root.is_game_over else "START GAME")
+                bold: True
+                font_size: '18sp'
+                halign: 'center'
+                color: (1, 1, 1, 1) if root.is_game_over else (0.5, 0.1, 0.5, 1)
+                background_normal: ''
+                background_color: 0, 0, 0, 0
+                on_release: root.toggle_game()
+                canvas.before:
+                    Color:
+                        rgba: (0.8, 0.1, 0.1, 1) if root.is_game_over else (1, 1, 1, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [20,]

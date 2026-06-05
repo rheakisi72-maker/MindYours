@@ -1,0 +1,30 @@
+<SplashScreen>:
+    FloatLayout:
+        # Layer 1: Background blur
+        Image:
+            id: bg_blur
+            source: 'wpp1.png'
+            allow_stretch: True
+            keep_ratio: False
+            size_hint: 1, 1
+            opacity: 0.4
+        
+        # Layer 2: Overlay gelap
+        FloatLayout:
+            id: overlay_canvas
+            size_hint: 1, 1
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0.3
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+        
+        # Layer 3: Gambar utama
+        Image:
+            id: splash_image
+            source: 'wpp1.png'
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: 1, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}

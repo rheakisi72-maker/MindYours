@@ -1,0 +1,361 @@
+<TodayFeelingScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png'
+            size: self.size
+            pos: self.pos
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(10)
+        
+        # Label "Today Feeling page"
+        Label:
+            text: 'Today Feeling page'
+            font_size: sp(14)
+            color: 0.4, 0.2, 0.5, 1
+            size_hint_y: 0.05
+            halign: 'left'
+            valign: 'top'
+            text_size: self.size
+            padding: [dp(10), dp(5)]
+        
+        # Header dengan tombol back
+        BoxLayout:
+            size_hint: 1, None
+            height: dp(60)
+            pos_hint: {'top': 1}
+            padding: dp(10)
+            
+            Button:
+                text: '<'
+                font_size: sp(30)
+                bold: True
+                size_hint_x: None
+                width: dp(40)
+                background_normal: ''
+                background_color: 0,0,0,0
+                color: 0.4, 0.2, 0.5, 1
+                on_release: root.go_to_back_screen()
+        # Judul
+        Label:
+            text: 'How Do You Feel Today?'
+            font_size: sp(22)
+            bold: True
+            color:0.4, 0.2, 0.5, 1
+            size_hint_y: 0.07
+        
+        # Grid 3x3 untuk 9 emosi
+        GridLayout:
+            cols: 3
+            rows: 3
+            spacing: dp(15)
+            padding: [dp(20), 0, dp(20), dp(20)]
+            size_hint_y: 0.80
+            
+            # === ANGER ===
+            EmotionButton:
+                feeling_name: 'Anger'
+                
+                canvas.before:
+                    Color:
+                        rgba: 1, 0.4, 0.4, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'ang.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Anger'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === ANXIETY ===
+            EmotionButton:
+                feeling_name: 'Anxiety'
+                
+                canvas.before:
+                    Color:
+                        rgba: 1, 0.7, 0.4, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'anx.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Anxiety'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === JOY ===
+            EmotionButton:
+                feeling_name: 'Joy'
+                
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 0.4, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'joy.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Joy'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === DISGUST ===
+            EmotionButton:
+                feeling_name: 'Disgust'
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.6, 1, 0.4, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'dgs.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Disgust'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === ENVY ===
+            EmotionButton:
+                feeling_name: 'Envy'
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.4, 1, 0.9, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'env.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Envy'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === SADNESS ===
+            EmotionButton:
+                feeling_name: 'Sadness'
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.7, 1, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'sad.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Sadness'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === EMBARRASSMENT ===
+            EmotionButton:
+                feeling_name: 'Embarrassment'
+                
+                canvas.before:
+                    Color:
+                        rgba: 1, 0.5, 0.9, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'emb.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Embarrassment'
+                    font_size: sp(10)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === FEAR ===
+            EmotionButton:
+                feeling_name: 'Fear'
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.8, 0.6, 1, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'fear.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Fear'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size
+            
+            # === ENNUI ===
+            EmotionButton:
+                feeling_name: 'Ennui'
+                
+                canvas.before:
+                    Color:
+                        rgba: 0.5, 0.5, 1, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [dp(15)]
+                
+                Image:
+                    source: 'enn.png'
+                    size_hint: None, None
+                    size: dp(90), dp(90)
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + dp(12)
+                    allow_stretch: True
+                    keep_ratio: True
+                
+                Label:
+                    text: 'Ennui'
+                    font_size: sp(13)
+                    bold: True
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.parent.width, dp(30)
+                    center_x: self.parent.center_x
+                    y: self.parent.y + dp(8)
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.size

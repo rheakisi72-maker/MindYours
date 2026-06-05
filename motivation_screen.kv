@@ -1,0 +1,229 @@
+#:import hex kivy.utils.get_color_from_hex
+
+# Desain Tombol Mood (Kotak-kotak mood)
+<MoodButton>:
+    orientation: 'vertical'
+    padding: dp(5)
+    spacing: dp(5)
+    # Background tombol yang rounded dan berwarna
+    canvas.before:
+        Color:
+            rgba: root.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(18),]
+    
+    # Gambar Karakter
+    Image:
+        source: root.image_source
+        size_hint_y: 0.7
+        allow_stretch: True
+    
+    # Label Nama Mood
+    Label:
+        text: root.mood_name
+        font_size: sp(13)
+        bold: True
+        color: 0, 0, 0, 1
+        size_hint_y: 0.3
+
+# Desain Layar Utama Motivasi
+<MotivationScreen>:
+    # Background Utama Aplikasi
+    canvas.before:
+        Rectangle:
+            source: 'wpp4.png' # Pastikan file gambar ini ada
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 1, 1, 1, 0.3 # Overlay putih transparan
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    FloatLayout:
+        # --- HEADER (Tombol Back) ---
+        BoxLayout:
+            size_hint: 1, None
+            height: dp(60)
+            pos_hint: {'top': 1}
+            padding: dp(10)
+            
+            Button:
+                text: '<'
+                font_size: sp(30)
+                bold: True
+                size_hint_x: None
+                width: dp(40)
+                background_normal: ''
+                background_color: 0,0,0,0
+                color: 0.4, 0.2, 0.5, 1
+                on_release: root.go_back()
+            
+            Widget: # Spacer kosong
+
+        # --- GRID PILIHAN MOOD (Fase 1) ---
+        BoxLayout:
+            id: mood_selection_area
+            orientation: 'vertical'
+            size_hint: 0.9, 0.85
+            pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+            spacing: dp(20)
+
+            Label:
+                text: "Pick motivation\nbased on your mood today"
+                font_size: sp(20)
+                bold: True
+                color: 0.4, 0.2, 0.5, 1
+                halign: 'center'
+                size_hint_y: None
+                height: dp(60)
+
+            GridLayout:
+                cols: 3
+                spacing: dp(15)
+                
+                # --- Baris 1 ---
+                MoodButton:
+                    mood_name: 'Anger'
+                    image_source: 'ang.png'
+                    bg_color: hex('#ff6666')
+                    on_release: root.select_mood('Anger')
+                MoodButton:
+                    mood_name: 'Anxiety'
+                    image_source: 'anx.png'
+                    bg_color: hex('#ffb366')
+                    on_release: root.select_mood('Anxiety')
+                MoodButton:
+                    mood_name: 'Joy'
+                    image_source: 'joy.png'
+                    bg_color: hex('#ffff66')
+                    on_release: root.select_mood('Joy')
+
+                # --- Baris 2 ---
+                MoodButton:
+                    mood_name: 'Disgust'
+                    image_source: 'dgs.png'
+                    bg_color: hex('#99ff66')
+                    on_release: root.select_mood('Disgust')
+                MoodButton:
+                    mood_name: 'Envy'
+                    image_source: 'env.png'
+                    bg_color: hex('#66ffeb')
+                    on_release: root.select_mood('Envy')
+                MoodButton:
+                    mood_name: 'Sadness'
+                    image_source: 'sad.png'
+                    bg_color: hex('#80b3ff')
+                    on_release: root.select_mood('Sadness')
+
+                # --- Baris 3 ---
+                MoodButton:
+                    mood_name: 'Embarrassment'
+                    image_source: 'emb.png'
+                    bg_color: hex('#ff80e6')
+                    on_release: root.select_mood('Embarrassment')
+                MoodButton:
+                    mood_name: 'Fear'
+                    image_source: 'fear.png'
+                    bg_color: hex('#cc99ff')
+                    on_release: root.select_mood('Fear')
+                MoodButton:
+                    mood_name: 'Ennui'
+                    image_source: 'enn.png'
+                    bg_color: hex('#8080ff')
+                    on_release: root.select_mood('Ennui')
+
+        # --- KARTU AJAIB (Fase 2 - Hidden Awalnya) ---
+        BoxLayout:
+            id: card_area
+            orientation: 'vertical'
+            size_hint: None, None
+            size: dp(300), dp(450)
+            pos_hint: {'center_x': 0.5, 'center_y': -0.8} # Sembunyi di bawah layar
+            opacity: 0
+
+            # KARTU UTAMA
+            Button:
+                id: magic_card
+                background_normal: ''
+                background_color: 0,0,0,0
+                on_release: root.reveal_card()
+
+                canvas.before:
+                    # Bayangan
+                    Color:
+                        rgba: 0, 0, 0, 0.2
+                    RoundedRectangle:
+                        pos: self.x + dp(5), self.y - dp(5)
+                        size: self.size
+                        radius: [dp(20),]
+                    
+                    # Warna Dasar Kertas
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(20),]
+                    
+                    # Garis Tepi (Berubah warna sesuai mood)
+                    Color:
+                        rgba: root.current_theme_color
+                    Line:
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(20))
+                        width: 2
+
+                FloatLayout:
+                    size: self.parent.size
+                    pos: self.parent.pos
+
+                    # [BELAKANG KARTU] - Sebelum diklik
+                    Label:
+                        id: cover_text
+                        text: 'Tap to Reveal'
+                        font_size: sp(20)
+                        color: 0.6, 0.6, 0.6, 1
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    
+                    # [DEPAN KARTU] - Setelah diklik
+                    BoxLayout:
+                        id: content_box
+                        orientation: 'vertical'
+                        padding: dp(25)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        opacity: 0 # Hidden awal
+
+                        Label:
+                            id: quote_text
+                            text: ''
+                            color: 0, 0, 0, 1
+                            font_size: sp(22)
+                            bold: True
+                            halign: 'center'
+                            valign: 'middle'
+                            text_size: self.width, None
+
+                        Label:
+                            id: author_text
+                            text: ''
+                            color: 0.5, 0.5, 0.5, 1
+                            font_size: sp(16)
+                            italic: True
+                            size_hint_y: None
+                            height: dp(40)
+
+            # Tombol Reset
+            Button:
+                id: reset_btn
+                text: 'Pilih Mood Lain'
+                size_hint_y: None
+                height: dp(50)
+                background_normal: ''
+                background_color: 0,0,0,0
+                color: 0, 0, 0, 0.5
+                bold: True
+                opacity: 0
+                disabled: True
+                on_release: root.reset_view()
